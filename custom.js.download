@@ -1,0 +1,142 @@
+(function ($) {
+    "use strict";
+    var mainApp = {
+
+        main_fun: function () {
+
+            //ADD REMOVE PADDING CLASS ON SCROLL
+            $(window).scroll(function () {
+                if ($(".navbar").offset().top >50) {
+                    $(".navbar-fixed-top").addClass("navbar-pad-original");
+                } else {
+                    $(".navbar-fixed-top").removeClass("navbar-pad-original");
+                }
+            });
+
+       
+
+
+            /*====================================
+               WRITE YOUR SCRIPTS BELOW 
+           ======================================*/
+
+
+        },
+
+        initialization: function () {
+            mainApp.main_fun();
+
+        }
+
+    }
+    // Initializing ///
+
+    $(document).ready(function () {
+        mainApp.main_fun();
+    });
+
+}(jQuery));
+
+var base_url = '#';
+
+$('#regBtn').click(function () {
+    var regMsg = $("#regMsg");
+    var regUsername = $("#regUsername").val();
+    var regPhone = $("#regPhone").val();
+    var regEmail = $("#regEmail").val();
+    var regPass = $("#regPass").val();
+    var regCfmPass = $("#regCfmPass").val();
+    var firstChoice = $("#firstChoice").val();
+    var secondChoice = $("#secondChoice").val();
+    var thirdChoice = $("#thirdChoice").val();
+    var fourthChoice = $("#fourthChoice").val();
+
+    var reg_tok = $("#regTok").val();
+
+    regMsg.html('');
+    if ( regUsername == '' && regPhone == '' && regEmail == '' && regPass == '' && regCfmPass == '')
+    {
+        regMsg.html('<div class="text-danger">Fill out the mandatory fields.</div>');
+    }
+    else if (regPass != regCfmPass)
+    {
+        regMsg.html('<div class="text-danger">Password(s) do not match.</div>');
+    }
+    else
+    {
+        regMsg.html('<div class="text-warning">Please wait...</div>');
+        $.post(
+            base_url+'/register',
+            {
+                regUsername: regUsername,
+                regPhone: regPhone,
+                regEmail: regEmail,
+                regPass: regPass,
+                regCfmPass: regCfmPass,
+                firstChoice: firstChoice,
+                secondChoice: secondChoice,
+                thirdChoice: thirdChoice,
+                fourthChoice: fourthChoice,
+                reg_tok: reg_tok
+            },
+            function(returnedData){
+                if (returnedData)
+                {
+                    var ret = JSON.parse(returnedData);
+                    if (ret['flag'] == '0')
+                    {
+                        regMsg.html('<div class="text-danger">'+ret["message"]+'</div>');
+                    }
+                    else
+                    {
+                        $("#regForm")[0].reset();
+                        regMsg.html('<div class="text-success">'+ret["message"]+'</div>')
+                    }
+                }
+                
+        });
+    }
+});
+
+$('#loginBtn').click(function () {
+    var loginMsg = $("#loginMsg");
+    var loginID = $("#loginID").val();
+    var loginPass = $("#loginPass").val();
+
+    var login_tok = $("#loginTok").val();
+
+    loginMsg.html('');
+    if ( loginID == '' && loginPass == '')
+    {
+        loginMsg.html('<div class="text-danger">Fill out the mandatory fields.</div>');
+    }
+    else
+    {
+        loginMsg.html('<div class="text-warning">Please wait...</div>');
+        $.post(
+            base_url+'/login',
+            {
+                loginID: loginID,
+                loginPass: loginPass,
+                login_tok: login_tok
+            },
+            function(returnedData){
+                if (returnedData)
+                {
+                    var l_ret = JSON.parse(returnedData);
+                    if (l_ret['flag'] == '0')
+                    {
+                        loginMsg.html('<div class="text-danger">'+l_ret["message"]+'</div>');
+                    }
+                    else
+                    {
+                        $("#regForm")[0].reset();
+                        loginMsg.html('<div class="text-success">'+l_ret["message"]+'</div>')
+                        window.location = '';
+                    }
+                }
+                
+        });
+    }
+});
+

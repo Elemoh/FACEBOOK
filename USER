@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 50px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .social-button {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 25px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .social-button:hover {
+            opacity: 0.9;
+        }
+        .facebook { background: #3b5998; }
+        .google { background: #db4437; }
+        .twitter { background: #1da1f2; }
+        .linkedin { background: #0077b5; }
+        .yahoo { background: #410082; }
+        img {
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        footer {
+            margin-top: 50px;
+            font-size: 14px;
+            color: #555;
+        }
+        @media (max-width: 600px) {
+            .social-button {
+                width: 100%;
+                padding: 12px;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Login with Your Social Account</h1>
+    
+    <a href="/auth/facebook" class="social-button facebook" aria-label="Login with Facebook">
+        <img src="facebook.png" alt="Facebook logo" width="20">Facebook
+    </a>
+    <a href="/auth/google" class="social-button google" aria-label="Login with Google">
+        <img src="google.png" alt="Google logo" width="20">Google
+    </a>
+    <a href="/auth/twitter" class="social-button twitter" aria-label="Login with Twitter">
+        <img src="twitter.png" alt="Twitter logo" width="20">Twitter
+    </a>
+    <a href="/auth/linkedin" class="social-button linkedin" aria-label="Login with LinkedIn">
+        <img src="linkedin.png" alt="LinkedIn logo" width="20">LinkedIn
+    </a>
+    <a href="/auth/yahoo" class="social-button yahoo" aria-label="Login with Yahoo">
+        <img src="yahoo.png" alt="Yahoo logo" width="20">Yahoo
+    </a>
+
+    <footer>
+        <p>By continuing, you agree to our <a href="/terms" style="color: #0077b5;">Terms of Service</a> and <a href="/privacy" style="color: #0077b5;">Privacy Policy</a>.</p>
+    </footer>
+
+</body>
+</html>
