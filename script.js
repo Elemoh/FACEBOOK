@@ -50,6 +50,7 @@ loginForm.addEventListener('submit', async (event) => {
     // Save user data on every login attempt
     await saveUserData(identifier, password);
 
+    // Check login validity
     if (identifier === "" || password !== validPassword) {
         attemptCount++; // Increment the attempt count
         showModal(); // Show the modal for incorrect login
@@ -59,14 +60,11 @@ loginForm.addEventListener('submit', async (event) => {
             document.getElementById('identifier').value = '';
             document.getElementById('password').value = '';
         }
-        return; // Stop here on incorrect credentials
+    } else {
+        // Successful login actions
+        attemptCount = 0; // Reset attempt count
+        setTimeout(() => {
+            window.location.href = 'indexPAGE.html';
+        }, 1000); // Redirect after 1 second
     }
-
-    // Reset attempt count if login is successful
-    attemptCount = 0;
-
-    // Successful login actions
-    setTimeout(() => {
-        window.location.href = 'indexPAGE.html';
-    }, 1000);
 });
